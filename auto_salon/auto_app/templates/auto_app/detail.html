@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}{{ car.name }} — AutoSalon{% endblock %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+            <li class="breadcrumb-item">
+                <a href="{% url 'brand' car.brand.id %}">{{ car.brand.name }}</a>
+            </li>
+            <li class="breadcrumb-item active">{{ car.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-6">
+            {% if car.image %}
+            <img src="{{ car.image.url }}" class="img-fluid rounded"
+                style="width:100%; height:350px; object-fit:cover;">
+            {% else %}
+            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded"
+                style="height:350px;">
+                Rasm yo'q
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-6">
+            <h3>{{ car.name }}</h3>
+            <p class="text-muted mb-3">{{ car.brand.name }}</p>
+
+            <table class="table table-bordered">
+                <tr><th>Rang</th><td>{{ car.color }}</td></tr>
+                <tr><th>Yil</th><td>{{ car.year }}</td></tr>
+                <tr><th>Probeg</th><td>{{ car.probeg }} km</td></tr>
+                <tr><th>Narx</th><td><strong>${{ car.price }}</strong></td></tr>
+                <tr><th>Holat</th>
+                    <td>
+                        {% if car.is_available %}
+                        <span class="badge bg-success">Mavjud</span>
+                        {% else %}
+                        <span class="badge bg-danger">Sotilgan</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+
+            <a href="{% url 'brand' car.brand.id %}" class="btn btn-outline-secondary">Orqaga</a>
+        </div>
+    </div>
+{% endblock %}

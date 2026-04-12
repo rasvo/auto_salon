@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}{{ brand.name }} — AutoSalon{% endblock %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+            <li class="breadcrumb-item active">{{ brand.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex align-items-center gap-3 mb-3">
+        {% if brand.logo %}
+        <img src="{{ brand.logo.url }}" style="width:60px; height:60px; object-fit:contain;">
+        {% endif %}
+
+        <div>
+            <h4 class="mb-0">{{ brand.name }}</h4>
+            <small class="text-muted">
+                {{ brand.country }} &bull; {{ brand.founded_year }} yil
+            </small>
+        </div>
+    </div>
+
+    {% if brand.description %}
+        <p class="text-muted mb-4">{{ brand.description }}</p>
+    {% endif %}
+
+    <h5>Avtomobillar ({{ cars.count }} ta)</h5>
+
+    <div class="row">
+        {% for c in cars %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+
+                {% if c.image %}
+                <img src="{{ c.image.url }}" class="card-img-top"
+                     style="height:200px; object-fit:cover;">
+                {% else %}
+                <div class="bg-secondary text-white d-flex align-items-center justify-content-center"
+                     style="height:200px;">
+                    Rasm yo'q
+                </div>
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ c.name }}</h5>
+
+                    <p class="card-text text-muted">
+                        {{ c.color }} &bull; {{ c.year }} yil
+                    </p>
+
+                    <p class="card-text">
+                        <strong>${{ c.price }}</strong>
+                    </p>
+
+                    <p class="card-text">
+                        <small class="text-muted">{{ c.probeg }} km</small>
+                    </p>
+
+                    {% if c.is_available %}
+                        <span class="badge bg-success">Mavjud</span>
+                    {% else %}
+                        <span class="badge bg-danger">Sotilgan</span>
+                    {% endif %}
+                </div>
+
+                <div class="card-footer">
+                    <a href="{% url 'detail' c.id %}" class="btn btn-primary w-100">
+                        Batafsil
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-muted">Bu brendda hozircha avtomobil yo'q.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'home' %}" class="btn btn-outline-secondary mt-2">
+        Ortga
+    </a>
+{% endblock %}

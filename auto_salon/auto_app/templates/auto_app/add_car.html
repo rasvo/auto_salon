@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yangi mashina qo'shish</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f4f9;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        h2 {
+            margin-bottom: 25px;
+            color: #333;
+            border-left: 5px solid #007bff;
+            padding-left: 15px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        /* Django form.as_p stillari */
+        form p {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0,123,255,0.3);
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: 0.2s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .cancel-btn {
+            background: #6c757d;
+            text-decoration: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 6px;
+            display: inline-block;
+            transition: 0.2s;
+        }
+        .cancel-btn:hover {
+            background: #5a6268;
+            text-decoration: none;
+            color: white;
+        }
+        .errorlist {
+            color: #dc3545;
+            list-style: none;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>➕ Yangi mashina qo'shish</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Formani chiqarish (as_p) -->
+            {{ form.as_p }}
+
+            <div style="margin-top: 25px;">
+                <button type="submit">💾 Saqlash</button>
+                <a href="{% url 'home' %}" class="cancel-btn">❌ Bekor qilish</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

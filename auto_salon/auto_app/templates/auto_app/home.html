@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}AutoSalon | Bosh sahifa{% endblock %}
+
+{% block content %}
+    <h5>Brendlar</h5>
+    <div class="mb-4">
+        <a href="{% url 'home' %}" class="btn btn-dark m-1">Barchasi</a>
+        {% for brand in brands %}
+        <a href="{% url 'brand' brand.id %}" class="btn btn-outline-primary m-1">
+            {{ brand.name }}
+        </a>
+        {% endfor %}
+    </div>
+
+    <h5>Avtomobillar</h5>
+    <div class="row">
+        {% for c in cars %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+
+                {% if c.image %}
+                <img src="{{ c.image.url }}" class="card-img-top"
+                     style="height:200px; object-fit:cover;">
+                {% else %}
+                <div class="bg-secondary text-white d-flex align-items-center justify-content-center"
+                     style="height:200px;">
+                    Rasm yo'q
+                </div>
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ c.name }}</h5>
+
+                    <p class="card-text text-muted">
+                        {{ c.brand.name }} &bull; {{ c.color }}
+                    </p>
+
+                    <p class="card-text">
+                        <strong>${{ c.price }}</strong>
+                    </p>
+
+                    <p class="card-text">
+                        <small class="text-muted">
+                            {{ c.year }} yil &bull; {{ c.probeg }} km
+                        </small>
+                    </p>
+
+                    {% if c.is_available %}
+                        <span class="badge bg-success">Mavjud</span>
+                    {% else %}
+                        <span class="badge bg-danger">Sotilgan</span>
+                    {% endif %}
+                </div>
+
+                <div class="card-footer">
+                    <a href="{% url 'detail' c.id %}" class="btn btn-primary w-100">
+                        Batafsil
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-muted">Hozircha avtomobillar yo'q.</p>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

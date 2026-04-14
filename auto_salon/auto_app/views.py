@@ -83,3 +83,28 @@ def delete_brand(request, brand_id):
         return redirect('home')
     context = {'brand': brand}
     return render(request, 'auto_app/brand_confirm_delete.html',context )
+
+
+def update_brand(request, brand_id):
+    brand = get_object_or_404(Brand, id=brand_id)
+    if request.method == 'POST':
+        form = BrandForm(request.POST, request.FILES, instance=brand)
+        if form.is_valid():
+            form.save()
+            return redirect('brand', brand_id=brand.id)
+    else:
+        form = BrandForm(instance=brand)
+    return render(request, 'auto_app/update_brand.html', {'form': form, 'brand': brand})
+
+
+
+def update_car(request, car_id):
+    car = get_object_or_404(Car, id=car_id)
+    if request.method == 'POST':
+        form = CarForm(request.POST, instance=car)
+        if form.is_valid():
+            form.save()
+            return redirect('detail', car_id=car.id)
+    else:
+        form = CarForm(instance=car)
+    return render(request, 'auto_app/update_car.html', {'form': form, 'car': car})

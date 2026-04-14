@@ -18,47 +18,36 @@
         {% for c in cars %}
         <div class="col-md-4 mb-4">
             <div class="card h-100">
-
                 {% if c.image %}
-                <img src="{{ c.image.url }}" class="card-img-top"
-                     style="height:200px; object-fit:cover;">
+                <img src="{{ c.image.url }}" class="card-img-top" style="height:200px; object-fit:cover;">
                 {% else %}
-                <div class="bg-secondary text-white d-flex align-items-center justify-content-center"
-                     style="height:200px;">
+                <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height:200px;">
                     Rasm yo'q
                 </div>
                 {% endif %}
-
                 <div class="card-body">
                     <h5 class="card-title">{{ c.name }}</h5>
-
-                    <p class="card-text text-muted">
-                        {{ c.brand.name }} &bull; {{ c.color }}
-                    </p>
-
-                    <p class="card-text">
-                        <strong>${{ c.price }}</strong>
-                    </p>
-
-                    <p class="card-text">
-                        <small class="text-muted">
-                            {{ c.year }} yil &bull; {{ c.probeg }} km
-                        </small>
-                    </p>
-
+                    <p class="card-text text-muted">{{ c.brand.name }} &bull; {{ c.color }}</p>
+                    <p class="card-text"><strong>${{ c.price }}</strong></p>
+                    <p class="card-text"><small class="text-muted">{{ c.year }} yil &bull; {{ c.probeg }} km</small></p>
                     {% if c.is_available %}
                         <span class="badge bg-success">Mavjud</span>
                     {% else %}
                         <span class="badge bg-danger">Sotilgan</span>
                     {% endif %}
                 </div>
+                <div class="card-footer d-flex gap-2">
+                    <a href="{% url 'detail' c.id %}" class="btn btn-primary w-100">Batafsil</a>
 
-                <div class="card-footer">
-                    <a href="{% url 'detail' c.id %}" class="btn btn-primary w-100">
-                        Batafsil
-                    </a>
+                    {% if user.is_authenticated and user.is_staff %}
+                    <a href="{% url 'delete_car' c.id %}" class="btn btn-danger w-100">O‘chirish</a>
+                {% endif %}
+
+                    {% if user.is_staff %}
+                    <a href="{% url 'delete_brand' brand.id %}" class="btn btn-danger">O‘chirish</a>
+                {% endif %}
+
                 </div>
-
             </div>
         </div>
         {% empty %}

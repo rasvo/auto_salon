@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Mashinani o‘chirish{% endblock %}
+
+{% block content %}
+<div class="section" style="max-width: 600px; text-align: center;">
+    <div style="background: white; border-radius: 24px; padding: 2rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+        <h2>⚠️ Mashinani o‘chirish</h2>
+        <p>Siz <strong>"{{ car.title }}"</strong> nomli mashinani butunlay o‘chirmoqchimisiz?</p>
+        <p style="color: #dc2626; font-size: 0.9rem;">Bu amal qaytarib bo‘lmaydi!</p>
+        <form method="post">
+            {% csrf_token %}
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                <button type="submit" style="background: #dc2626; color: white; border: none; padding: 10px 24px; border-radius: 40px; cursor: pointer;">Ha, o‘chirish</button>
+                <a href="{% url 'detail' car.id %}" style="background: #6c757d; color: white; padding: 10px 24px; border-radius: 40px; text-decoration: none;">Bekor qilish</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

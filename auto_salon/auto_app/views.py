@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Brand, Car
 from .forms import BrandForm, CarForm
 from django.http import HttpRequest
+from .models import Car
 
 
 def home(request: HttpRequest):
@@ -60,3 +61,25 @@ def add_car(request: HttpRequest):
         form = CarForm()
     return render(request, 'auto_app/add_car.html', {'form': form})
 
+
+# -----------------------------
+
+
+def car_delete(request, car_id):
+    car = get_object_or_404(Car, id=car_id)
+    if request.method == 'POST':
+        car.delete()
+        return redirect('home')
+    context = {'car': car}
+
+    return render(request, 'auto_app/car_delete.html', context)
+
+
+
+def delete_brand(request, brand_id):
+    brand = get_object_or_404(Brand, id=brand_id)
+    if request.method == 'POST':
+        brand.delete()
+        return redirect('home')
+    context = {'brand': brand}
+    return render(request, 'auto_app/brand_confirm_delete.html',context )
